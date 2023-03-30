@@ -1,6 +1,17 @@
 # Rasp-Secure-Blockchain-UAVNet
 A repository containing an implementation of a secure blockchain based decentralized and distributed network, targeted towards improving unmanned vehicular communications (UAV's) in conflict zone scenarios.
 
+# Configurations
+The following configurations have been made to both the Raspberry Pis to simulate the presence of multiple UAVs along with a single GCS:
+
+1. **rasp-008** - Utilised as a server, thereby replicating the GCS.
+2. **rasp-028** - Utilised as a client, thereby replicating a single UAV. Further UAVs are simulated as processes on this Raspberry Pi.
+3. **Ports** :-
+
+    - The GCS is maintained at a static IP (rasp-008: 10.35.70.8:33333)
+    - One UAV is maintained at a static IP (rasp-028: 10.35.70.28:33400)
+    - All the other UAVs are maintained on the localhost of the raspberry pi mentioned above (rasp-028: 127.0.0.1:ports ranging between 33000-34000)
+
 # How to run ?
 1. Clone the **main** branch of this repository to your local machine.
 2. Make changes to the path present in the following lines within the following files (to match the directory within your local machine where the repository is cloned):
