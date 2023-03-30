@@ -45,8 +45,8 @@ A repository containing an implementation of a secure blockchain based decentral
 # Note
 This program involves the use of **OS** libraries, which create and modify files within the project directory. This might result in the need for access to certain permissions or RBAC modes. Hence, we recommend that you clone this project to a local directory on your machine (such as **Desktop**) which would not additional permissions to create and modify files.
 
-# Contributing to CN-Data-Fabric-Provider
-Hello and welcome! We are so glad that you are interested in contributing to CN Data Fabric Provider!
+# Contributing to Rasp-Secure-Blockchain-UAVNet
+Hello and welcome! We are so glad that you are interested in contributing to Rasp Secure Blockchain UAVNet!
 We only have a couple of rules and we hope you enjoy the process :)
 
 ## Contributing Rules
