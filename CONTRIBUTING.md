@@ -1,10 +1,9 @@
-# Contributing to *your project title*
-Hello and welcome! We are so glad that you are interested in contributing to *your project title*!
+# Contributing to Rasp-Secure-Blockchain-UAVNet
+Hello and welcome! We are so glad that you are interested in contributing to Rasp Secure Blockchain UAVNet!
 We only have a couple of rules and we hope you enjoy the process :)
 
 ## Contributing Rules
 1. Don't move or delete any files. Only modify them.
-2. Add additional rules as per *your project title*.
 
 ## Contributing Process
 1. Fork the repository
