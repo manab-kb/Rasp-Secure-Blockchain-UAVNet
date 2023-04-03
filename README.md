@@ -4,25 +4,24 @@ A repository containing an implementation of a secure blockchain based decentral
 # Configurations
 The following configurations have been made to both the Raspberry Pis to simulate the presence of multiple UAVs along with a single GCS:
 
-1. **rasp-008** - Utilised as a server, thereby replicating the GCS.
-2. **rasp-028** - Utilised as a client, thereby replicating a single UAV. Further UAVs are simulated as processes on this Raspberry Pi.
+1. **rasp-008** - Utilised as a server, thereby replicating the GCS. (Can also run client code if and when needed with no modifications whatsoever)
+2. **rasp-028** - Utilised as a client, thereby replicating a single UAV. Further UAVs are also simulated on this Raspberry Pi.
 3. **Ports** :-
 
     - The GCS is maintained at a static IP (rasp-008: 10.35.70.8:33333)
-    - One UAV is maintained at a static IP (rasp-028: 10.35.70.28:33400)
-    - All the other UAVs are maintained on the localhost of the raspberry pi mentioned above (rasp-028: 127.0.0.1:ports ranging between 33000-34000)
+    - All the UAVs are maintained on any of the two IP addresses (based on the choice of the user)raspberry (rasp-028/rasp-008: 0.0.0.0: ports ranging between 33334-33999)
 
 # How to run ?
 1. Clone the **main** branch of this repository to your local machine.
 2. Make changes to the path present in the following lines within the following files (to match the directory within your local machine where the repository is cloned):
 
-        a. Line 16 and 21 : Blockchain/blockchain.py
+        a. Line 22 and 35 : Blockchain/blockchain.py
     
-        b. Line 14 - GCS/gcs.py
+        b. Line 17 - GCS/gcs.py
      
-        c. Line 30 - Network/server.py
+        c. Line 33 - Network/server.py
 
-        d. Line 82 - UAV/uav.py
+        d. Line 85 - UAV/uav.py
 3. `pip install -r requirements.txt`  - to install all the requirements present within the requirements.txt file.
 4. Depending on the OS on which the program is being run; run the following commands (in order) in a terminal window within the cloned repository:
 
