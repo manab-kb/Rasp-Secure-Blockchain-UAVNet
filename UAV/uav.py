@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from Blockchain.blockchain import *
 from random import *
 from math import *
@@ -48,18 +51,18 @@ class UAV(Blockchain, client):
                 templong -= 0.00500
                 proof += 4
                 dist = sqrt(pow((templat - self.initLat), 2) + pow((templong - self.initLong), 2))
-        
+
         # Finding hashvalue for the block to be added and calling the functions to create and validate the block before being added into the blockchain
         if len(self.bchain) > 1:
             Blockchain.__init__(self, proof, 250)
             print("@log: Block Generated")
             self.createBlock()
-        
+
         if len(self.bchain) <= 1:
             Blockchain.__init__(self, proof, 250)
             print("@log: Block Generated")
             self.createBlock()
-        
+
         # Thread(target = self.validate, args = ())
         self.validate()
         print("@log: Block Validated")
@@ -74,12 +77,12 @@ class UAV(Blockchain, client):
         # Finally, also include coordinates for the drone in each block communication such that the location of the drone can be traced at any given point in time (useful when drone disconnects to find last active location)
 
     # Function used to switch creating blocks into the local buffer of each UAV when it disconnects from the central DB / Blockchain network
-    def localBuff(self):
+    def localBuff(self, index):
         # Creating a local db for the UAV if it already doesnt exist
         # index = self.lastBlock['index']
-        index = 1 # Temporary fix
+        # index = 1  #Temporary fix
         dirname = "UAV" + str(index)
-        os.chdir("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/UAV")
+        os.chdir("/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/UAV")
         if not os.path.exists(dirname):
             os.mkdir(dirname)
         os.chdir(dirname)

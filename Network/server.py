@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from socket import *
 from threading import *
 import os
@@ -22,12 +25,12 @@ class multithreadServer(object):
             client, add = self.sock.accept()
             print("\n@log: UAV connected: " + str(add) + "\n")
             Thread(target = self.recvData, args = (client,)).start()
-    
+
     # Function which helps in writing the contents of the blockchain to global central database
     def writetoDb(self, data):
         # Opening and writing to the created database for the blockchain
         dbname = "College Green.txt"
-        os.chdir("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/GCS")
+        os.chdir("/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/GCS")
         writefile = open(dbname, "w")
         writefile.write(data)
         writefile.close()

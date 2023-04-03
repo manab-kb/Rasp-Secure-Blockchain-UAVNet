@@ -1,5 +1,9 @@
+import sys
+sys.dont_write_bytecode = True
+
 from socket import *
 import pickle
+import random
 
 # Class containing member functions and variables for implementation of a client
 class client:
@@ -8,10 +12,9 @@ class client:
         # Specifying loopback address as hostname alongsides accepting port number
         self.host = hostname
         self.port = portnum
-        # Specifying hostname and portnumber for client socket to be binded to the ports within range
         self.chost = '0.0.0.0'
-        self.cport = 33400
-    
+        self.cport = random.randint(33334, 33999)
+
     # Function to connect to the GCS (server) and pass on data / blocks from the blockchain
     def serverConn(self, bdata):
         # Creating a TCP socket and using it to connect to the server socket

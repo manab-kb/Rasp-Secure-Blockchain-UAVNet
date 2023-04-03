@@ -1,8 +1,12 @@
-from geopy import *
+import sys
+sys.dont_write_bytecode = True
+
+# from geopy import * - TEMPORARY FIX UNTIL API CALLS THROUGH PROXY ARE DISCOVERED
 from datetime import *
 from hashlib import *
 from json import *
 import ast
+import os
 
 # Class containing member functions and variables for the blockchain
 class Blockchain:
@@ -13,14 +17,25 @@ class Blockchain:
             # Creating an empty blockchain
             self.bchain = []
         elif proof == 75:
-            localfile = open("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/UAV/UAV1/localBChain.txt", "r")
-            localdata = localfile.read()
-            localfile.close()
+            # Merges the largest available chain from the local buffers of each UAV
+            templocaldata = []
+            dirname = "/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/UAV/"
+            for filename in os.listdir(dirname):
+                if filename != 'uav.py':
+                    localdirname = os.path.join(dirname, filename)
+                    os.chdir(localdirname)
+                    localfile = open("localBChain.txt", "r")
+                    templocaldata.append(localfile.read())
+                    localfile.close()
+            templocaldata.sort()
+            localdata = templocaldata[-1]
             self.bchain = ast.literal_eval(localdata)
         else:
-            file = open("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/GCS/College Green.txt", "r")
+            # Opens the most recent copy of the blockchain in the Global DB
+            file = open("/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/GCS/College Green.txt", "r")
             data = file.read()
             file.close()
+            # ADD CODE TO FIX RACE CONDITIONS
             self.bchain = ast.literal_eval(data)
 
         # Tuple for coordinates from location coordinates entered by the user / default values
@@ -37,7 +52,7 @@ class Blockchain:
         # self.geoloc = Nominatim(user_agent="blockchain_uavnet") - TEMPORARY FIX UNTIL API CALLS THROUGH PROXY ARE DISCOVERED
         # self.loc = str(self.geoloc.reverse(self.coord)) - TEMPORARY FIX UNTIL API CALLS THROUGH PROXY ARE DISCOVERED
         # self.locname = self.loc[3:16] - TEMPORARY FIX UNTIL API CALLS THROUGH PROXY ARE DISCOVERED
-        self.locname = "College Green" # Temporary fix
+        self.locname = "College Green"
 
     # Function to create and append a new block
     def createBlock(self):
@@ -79,6 +94,6 @@ class Blockchain:
 
             if self.hashValue(block1) != block2['prevHash']:
                 print("@log: hashvalue mismatch.")
-            
+
             else:
                 blockind+=1
