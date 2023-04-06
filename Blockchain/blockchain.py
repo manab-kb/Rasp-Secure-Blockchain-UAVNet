@@ -1,7 +1,7 @@
 import sys
 sys.dont_write_bytecode = True
 
-# from geopy import * - TEMPORARY FIX UNTIL API CALLS THROUGH PROXY ARE DISCOVERED
+# from geopy import *
 from datetime import *
 from hashlib import *
 from json import *
@@ -12,31 +12,41 @@ import os
 class Blockchain:
 
     # Constructor function to declare and initialize all member variables being used
-    def __init__(self, proof, powlen, initLat = 53.344250, initLong = -6.262410):
+    def __init__(self, proof, powlen, index = 1, initLat = 53.344250, initLong = -6.262410):
         if proof == 0:
             # Creating an empty blockchain
             self.bchain = []
         elif proof == 75:
             # Merges the largest available chain from the local buffers of each UAV
             templocaldata = []
-            dirname = "/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/UAV/"
+            dirname = "/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/UAV/"
             for filename in os.listdir(dirname):
                 if filename != 'uav.py':
-                    localdirname = os.path.join(dirname, filename)
-                    os.chdir(localdirname)
-                    localfile = open("localBChain.txt", "r")
-                    templocaldata.append(localfile.read())
-                    localfile.close()
-            templocaldata.sort()
-            localdata = templocaldata[-1]
+                    if filename != 'localBChain.txt':
+                        if filename != 'TempCollegeGreen.txt':
+                            localdirname = os.path.join(dirname, filename)
+                            os.chdir(localdirname)
+                            localfile = open("localBChain.txt", "r")
+                            # templocaldata.append(localfile.read()) - Temporary Fix
+                            localfile.close()
+            # templocaldata.sort() - Temporary Fix
+            # localdata = templocaldata[-1] - Temporary Fix
+            os.chdir(dirname) # Temporary Fix
+            localtempfile = open("localBChain.txt", "r")
+            localdata = localtempfile.read() # Temporary Fix
+            localtempfile.close()
             self.bchain = ast.literal_eval(localdata)
         else:
             # Opens the most recent copy of the blockchain in the Global DB
-            file = open("/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/GCS/College Green.txt", "r")
-            data = file.read()
-            file.close()
-            # ADD CODE TO FIX RACE CONDITIONS
-            self.bchain = ast.literal_eval(data)
+            if index == '1':
+                file1 = open("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/GCS/College Green.txt", "r")
+            else:
+                filepath = "/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/GCS/College Green" + str(index) + ".txt"
+                file1 = open(filepath, "r")
+            finaldata = str(file1.read())
+            file1.close()
+            self.bchain = ast.literal_eval(finaldata)
+
 
         # Tuple for coordinates from location coordinates entered by the user / default values
         self.initLat = initLat

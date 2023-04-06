@@ -12,8 +12,8 @@ from threading import *
 class UAV(Blockchain, client):
 
     # Constructor function to declare and initialise all member variables being used alongside calling the superclass
-    def __init__(self, proof):
-        Blockchain.__init__(self, proof, 250)
+    def __init__(self, proof, index):
+        Blockchain.__init__(self, proof, 250, index)
         # Initializing client class with hostname and port number
         client.__init__(self, 'rasp-008', 33333)
         # self.lastBlock = self.bchain[-1] Temporary fix
@@ -54,12 +54,12 @@ class UAV(Blockchain, client):
 
         # Finding hashvalue for the block to be added and calling the functions to create and validate the block before being added into the blockchain
         if len(self.bchain) > 1:
-            Blockchain.__init__(self, proof, 250)
+            Blockchain.__init__(self, proof, 250, index)
             print("@log: Block Generated")
             self.createBlock()
 
         if len(self.bchain) <= 1:
-            Blockchain.__init__(self, proof, 250)
+            Blockchain.__init__(self, proof, 250, index)
             print("@log: Block Generated")
             self.createBlock()
 
@@ -67,8 +67,18 @@ class UAV(Blockchain, client):
         self.validate()
         print("@log: Block Validated")
 
-    def globalcdb(self):
-        self.serverConn(self.bchain)
+    def globalcdb(self, index, key):
+        if index == '1':
+            # self.serverConn(self.bchain, index, key)
+            self.serverConn(self.bchain, index, key)
+        else:
+            filename = "/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/GCS/College Green" + str(index) + ".txt"
+            file1 = open(filename, "w")
+            file1.write(str(self.bchain))
+            file1.close()
+            self.serverConn(self.bchain, index, key)
+            # self.serverConn(self.bchain, index, key)
+            # print("\n@log: Connected to GCS\n")
         return self.proof
         # TO DO - add client socket code to communicate with other client sockets (decentralised) without the gcs and also with the gcs
         # Also add code to switch to local buffers only when UAV is disconnected from blockchain and match and update central blockchain db once connection is reestablished
@@ -82,7 +92,7 @@ class UAV(Blockchain, client):
         # index = self.lastBlock['index']
         # index = 1  #Temporary fix
         dirname = "UAV" + str(index)
-        os.chdir("/users/ugrad/biswasma/Desktop/Rasp-Secure-Blockchain-UAVNet/UAV")
+        os.chdir("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/UAV")
         if not os.path.exists(dirname):
             os.mkdir(dirname)
         os.chdir(dirname)
@@ -90,3 +100,9 @@ class UAV(Blockchain, client):
         # Continuing to write to the local db unless connection is established
         localf = open("localBChain.txt" , "w")
         localf.write(str(self.bchain))
+        localf.close()
+
+        os.chdir("/users/ugrad/biswasma/Desktop/CN-Data-Fabric-Provider/UAV/")
+        localf2 = open("localBChain.txt", "w")
+        localf2.write(str(self.bchain))
+        localf2.close()
